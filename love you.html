@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 🔥 IMPORTANTE -->
+<title>Para Ti ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffd3a5);
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+/* estrellas */
+.estrellas {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.estrella {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    animation: brillar 2s infinite;
+}
+
+@keyframes brillar {
+    0%,100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+/* texto */
+h1 {
+    margin-top: 25%;
+    font-size: 2em;
+    animation: latido 1s infinite;
+}
+
+p {
+    font-size: 1.1em;
+    padding: 0 15px;
+}
+
+@keyframes latido {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* botones */
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    margin: 10px;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+}
+
+.si {
+    background: white;
+    color: #ff4b6e;
+}
+
+.no {
+    background: rgba(255,255,255,0.3);
+    color: white;
+}
+
+/* carta */
+.carta {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff;
+    color: #ff4b6e;
+    padding: 20px;
+    border-radius: 15px;
+    width: 85%;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    transition: 0.5s;
+    z-index: 20;
+}
+
+.carta.activa {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.carta h2 {
+    font-size: 1.4em;
+}
+
+.carta p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* corazones */
+.corazon {
+    position: absolute;
+    font-size: 16px;
+    animation: flotar 6s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes flotar {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* mensaje final */
+.final {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    font-size: 1.2em;
+    opacity: 0;
+    transition: 1s;
+}
+
+.final.show {
+    opacity: 1;
+}
+
+/* 💥 ajuste para pantallas grandes */
+@media (min-width: 768px) {
+    h1 {
+        margin-top: 10%;
+        font-size: 3em;
+    }
+
+    .carta {
+        width: 350px;
+        padding: 40px;
+    }
+
+    .carta p {
+        font-size: 1em;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="estrellas" id="estrellas"></div>
+
+<h1>❤️ Hola Mi Amor ❤️</h1>
+<p>Desde que llegaste, mi mundo es más bonito ✨</p>
+
+<button class="si" id="siBtn">Sí quiero 💖</button>
+<button class="no" id="noBtn">No 😢</button>
+
+<div class="carta" id="carta">
+    <h2>💌 Para Ti 💌</h2>
+    <p>
+        Hola mi amor… 💕<br><br>
+
+        Desde que llegaste a mi vida todo cambió de una forma increíble. Los días son más bonitos, las sonrisas más sinceras y mi corazón late más fuerte por ti ❤️<br><br>
+
+        Me encanta todo de ti… tu forma de ser, tu voz, tu sonrisa, y cada pequeño detalle que te hace especial ✨<br><br>
+
+        Eres mi lugar favorito, mi paz y mi felicidad 💖<br><br>
+
+        Quiero estar contigo en cada momento, cuidarte, apoyarte y hacerte feliz siempre 🥰<br><br>
+
+        Gracias por existir…<br><br>
+
+        Te amo muchísimo ❤️
+    </p>
+</div>
+
+<div class="final" id="final">💖 Eres lo mejor que me ha pasado 💖</div>
+
+<audio id="musica" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3"></audio>
+
+<script>
+// estrellas
+for (let i = 0; i < 80; i++) {
+    let estrella = document.createElement("div");
+    estrella.classList.add("estrella");
+    estrella.style.left = Math.random() * 100 + "vw";
+    estrella.style.top = Math.random() * 100 + "vh";
+    document.getElementById("estrellas").appendChild(estrella);
+}
+
+// corazones
+function crearCorazon() {
+    const c = document.createElement("div");
+    c.classList.add("corazon");
+    c.innerHTML = "❤️";
+
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.fontSize = (Math.random() * 15 + 10) + "px";
+
+    document.body.appendChild(c);
+
+    setTimeout(() => c.remove(), 6000);
+}
+setInterval(crearCorazon, 300);
+
+// botón NO (compatible celular)
+const noBtn = document.getElementById("noBtn");
+
+function moverBoton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// 👇 funciona en PC y celular
+noBtn.addEventListener("mouseenter", moverBoton);
+noBtn.addEventListener("touchstart", moverBoton);
+
+// botón SÍ
+document.getElementById("siBtn").addEventListener("click", aceptar);
+
+function aceptar() {
+    document.getElementById("carta").classList.add("activa");
+    document.getElementById("final").classList.add("show");
+    document.getElementById("musica").play();
+}
+</script>
+
+</body>
+</html>
